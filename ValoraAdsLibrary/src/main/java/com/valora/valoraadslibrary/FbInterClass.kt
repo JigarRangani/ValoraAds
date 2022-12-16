@@ -53,7 +53,6 @@ open class FbInterClass {
             // Interstitial ad displayed callback
             isAdLoaded = false
             isInterstitialShown = false
-            listener.invoke(false)
             Log.e(TAG, "Interstitial ad displayed.")
         }
 
@@ -63,7 +62,6 @@ open class FbInterClass {
             admobInterAd = null
             isAdLoaded = false
             isInterstitialShown = false
-            listener.invoke(true)
             listenerImpMain?.invoke()
         }
 
