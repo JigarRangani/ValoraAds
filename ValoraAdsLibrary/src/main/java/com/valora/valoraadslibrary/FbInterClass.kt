@@ -41,7 +41,7 @@ open class FbInterClass {
     private var admobInterAd: InterstitialAd? = null
     private var adFailedCounter = 0
     private var isAdLoaded = false
-
+    var listenerImpMain: (() -> Unit)? = null
 
     lateinit var listener: (Boolean) -> Unit
     lateinit var loadListener: (Boolean) -> Unit
@@ -64,6 +64,7 @@ open class FbInterClass {
             isAdLoaded = false
             isInterstitialShown = false
             listener.invoke(true)
+            listenerImpMain?.invoke()
         }
 
         override fun onError(ad: Ad?, adError: AdError) {
@@ -119,8 +120,10 @@ open class FbInterClass {
 
     fun showInterstitialAd(
         activity: Activity,
-        listener: (Boolean) -> Unit
+        listener: (Boolean) -> Unit,
+        listenerImp: (() -> Unit)? = null
     ) {
+        this.listenerImpMain = listenerImp
         this.listener = listener
         if (isAdLoaded) {
             admobInterAd?.show()
@@ -133,7 +136,8 @@ open class FbInterClass {
         activity: Activity,
         adInterId: String,
         dialog: Dialog? = null,
-        listener: () -> Unit
+        listener: () -> Unit,
+        listenerImp: (() -> Unit)? = null
     ) {
         var isTimeUp = false
         var isAdShow = false
@@ -166,10 +170,10 @@ open class FbInterClass {
                     }
                 }
             if (!isTimeUp)
-                showInterstitialAd(activity) {
+                showInterstitialAd(activity, {
                     isAdShow = true
                     activity.runOnUiThread { listener.invoke() }
-                }
+                },listenerImp)
         } else {
             dialog?.show()
             loadInterstitialAd(activity, adInterId) {
@@ -185,10 +189,10 @@ open class FbInterClass {
                         }
                     }
                 if (!isTimeUp)
-                    showInterstitialAd(activity) {
+                    showInterstitialAd(activity, {
                         Log.e(TAG, "isAdShown $it")
                         activity.runOnUiThread { listener.invoke() }
-                    }
+                    })
             }
         }
     }

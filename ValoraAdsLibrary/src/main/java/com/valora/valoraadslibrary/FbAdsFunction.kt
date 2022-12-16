@@ -57,20 +57,18 @@ fun Activity.loadInterstitial(adInterId: String, listener: (Boolean) -> Unit) {
         .loadInterstitialAd(this, adInterId, listener)
 }
 
-fun Activity.showInterstitial(adInterId: String, listener: (Boolean) -> Unit) {
+fun Activity.showInterstitial( listener: (Boolean) -> Unit, listenerImp: (() -> Unit)? = null) {
     FbInterClass.getInstance()
-        .showInterstitialAd(this,listener,)
+        .showInterstitialAd(this,listener,listenerImp)
 }
 
 fun Activity.showInterOnDemand(
     adInterId: String,
     dialog: Dialog? = null,
-    listener: () -> Unit
+    listener: () -> Unit, listenerImp: (() -> Unit)? = null
 ) {
     FbInterClass.getInstance()
-        .loadAndShowInter(this, adInterId, dialog) {
-            listener.invoke()
-        }
+        .loadAndShowInter(this, adInterId, dialog,listener,listenerImp)
 }
 
 
