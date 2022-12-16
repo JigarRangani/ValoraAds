@@ -1,6 +1,7 @@
 package com.valora.valoraadslibrary
 
 import android.app.Activity
+import android.app.Dialog
 import android.content.Context
 import android.os.Build
 import android.os.Handler
@@ -50,6 +51,28 @@ fun Activity.isRewardAdLoaded(): Boolean {
     return RewardedFbAd.getInstance().isAdLoaded()
 
 }
+
+fun Activity.loadInterstitial(adInterId: String, listener: (Boolean) -> Unit) {
+    FbInterClass.getInstance()
+        .loadInterstitialAd(this, adInterId, listener)
+}
+
+fun Activity.showInterstitial(adInterId: String, listener: (Boolean) -> Unit) {
+    FbInterClass.getInstance()
+        .showInterstitialAd(this,listener,)
+}
+
+fun Activity.showInterOnDemand(
+    adInterId: String,
+    dialog: Dialog? = null,
+    listener: () -> Unit
+) {
+    FbInterClass.getInstance()
+        .loadAndShowInter(this, adInterId, dialog) {
+            listener.invoke()
+        }
+}
+
 
 fun Context.showAdmobBanner(
     adId: String, bannerLayout: FrameLayout,
