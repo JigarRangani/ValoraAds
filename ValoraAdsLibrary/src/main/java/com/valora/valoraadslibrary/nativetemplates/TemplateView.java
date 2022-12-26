@@ -31,11 +31,10 @@ import android.widget.TextView;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.constraintlayout.widget.ConstraintLayout;
-
-import com.valora.valoraadslibrary.admob_advanced_native_recyvlerview.R;
 import com.google.android.gms.ads.nativead.MediaView;
 import com.google.android.gms.ads.nativead.NativeAd;
 import com.google.android.gms.ads.nativead.NativeAdView;
+import com.valora.valoraadslibrary.R;
 
 /**
  * Base class for a template view. *
