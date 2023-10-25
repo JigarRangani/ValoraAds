@@ -104,6 +104,10 @@ fun Context.showAdmobBanner(
 
 }
 
+fun setTestDevice(id:String){
+    AdSettings.addTestDevice(id);
+}
+
 @Suppress("DEPRECATION")
 fun Context.getInstallerPackageName(): String? {
     runCatching {
