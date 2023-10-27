@@ -72,7 +72,7 @@ open class FbInterClass {
             admobInterAd = null
             isAdLoaded = false
             isInterstitialShown = false
-
+            listenerImpMain?.invoke()
             loadListener.invoke(false)
         }
 
@@ -139,6 +139,7 @@ open class FbInterClass {
     ) {
         var isTimeUp = false
         var isAdShow = false
+        this.listenerImpMain = listenerImp
         afterDelay(waitingTimeForAd) {
             if (!activity.isDestroyed && !activity.isFinishing)
                 if (dialog?.isShowing == true) {
