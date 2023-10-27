@@ -139,7 +139,7 @@ open class FbInterClass {
     ) {
         var isTimeUp = false
         var isAdShow = false
-        this.listenerImpMain = listenerImp
+        this.listenerImpMain = listener
         afterDelay(waitingTimeForAd) {
             if (!activity.isDestroyed && !activity.isFinishing)
                 if (dialog?.isShowing == true) {
