@@ -58,15 +58,16 @@ open class FbInterClass {
 
         override fun onInterstitialDismissed(ad: Ad) {
             // Interstitial dismissed callback
+            if (mActivity != null) {
+                mActivity?.runOnUiThread {   listenerImpMain?.invoke()}
+            } else {
+                listenerImpMain?.invoke()
+            }
             Log.e(TAG, "Interstitial ad dismissed.")
             admobInterAd = null
             isAdLoaded = false
             isInterstitialShown = false
-            if (mActivity != null) {
-                listenerImpMain?.invoke()
-            } else {
-                listenerImpMain?.invoke()
-            }
+
 
         }
 
