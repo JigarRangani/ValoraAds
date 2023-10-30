@@ -73,7 +73,12 @@ open class FbInterClass {
             isAdLoaded = false
             isInterstitialShown = false
             listenerImpMain?.invoke()
-            loadListener.invoke(false)
+            if (mActivity != null) {
+                mActivity?.runOnUiThread { loadListener.invoke(false)}
+            } else {
+                loadListener.invoke(false)
+            }
+
         }
 
         override fun onAdLoaded(ad: Ad) {
@@ -83,7 +88,11 @@ open class FbInterClass {
             isAdLoaded = true
             isInterstitialShown = false
             Log.e(TAG, "Loaded")
-            loadListener.invoke(true)
+            if (mActivity != null) {
+                mActivity?.runOnUiThread { loadListener.invoke(true) }
+            } else {
+                loadListener.invoke(true)
+            }
         }
 
         override fun onAdClicked(ad: Ad) {
@@ -130,6 +139,7 @@ open class FbInterClass {
         }
     }
 
+    var mActivity: Activity? = null
     fun loadAndShowInter(
         activity: Activity,
         adInterId: String,
@@ -139,6 +149,7 @@ open class FbInterClass {
     ) {
         var isTimeUp = false
         var isAdShow = false
+        this.mActivity = activity
         this.listenerImpMain = listener
         afterDelay(waitingTimeForAd) {
             if (!activity.isDestroyed && !activity.isFinishing)
@@ -172,7 +183,7 @@ open class FbInterClass {
                 showInterstitialAd(activity, {
                     isAdShow = true
                     activity.runOnUiThread { listener.invoke() }
-                },listenerImp)
+                }, listenerImp)
         } else {
             dialog?.show()
             loadInterstitialAd(activity, adInterId) {
