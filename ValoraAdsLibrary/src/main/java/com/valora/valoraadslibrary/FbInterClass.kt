@@ -62,7 +62,12 @@ open class FbInterClass {
             admobInterAd = null
             isAdLoaded = false
             isInterstitialShown = false
-            listenerImpMain?.invoke()
+            if (mActivity != null) {
+                listenerImpMain?.invoke()
+            } else {
+                listenerImpMain?.invoke()
+            }
+
         }
 
         override fun onError(ad: Ad?, adError: AdError) {
@@ -72,8 +77,9 @@ open class FbInterClass {
             admobInterAd = null
             isAdLoaded = false
             isInterstitialShown = false
-            listenerImpMain?.invoke()
+
             if (mActivity != null) {
+                listenerImpMain?.invoke()
                 mActivity?.runOnUiThread { loadListener.invoke(false)}
             } else {
                 loadListener.invoke(false)
