@@ -59,8 +59,12 @@ open class FbInterClass {
         override fun onInterstitialDismissed(ad: Ad) {
             // Interstitial dismissed callback
             if (mActivity != null) {
-                mActivity?.runOnUiThread {   listenerImpMain?.invoke()}
+
+                mActivity?.runOnUiThread {
+                    Log.e(TAG, "Interstitial ad dismissed.  ui thread")
+                    listenerImpMain?.invoke()}
             } else {
+                Log.e(TAG, "Interstitial ad dismissed.  non ui thread")
                 listenerImpMain?.invoke()
             }
             Log.e(TAG, "Interstitial ad dismissed.")
@@ -157,7 +161,7 @@ open class FbInterClass {
         var isTimeUp = false
         var isAdShow = false
         this.mActivity = activity
-        this.listenerImpMain = listener
+        this.listenerImpMain = listenerImp
         afterDelay(waitingTimeForAd) {
             if (!activity.isDestroyed && !activity.isFinishing)
                 if (dialog?.isShowing == true) {
@@ -209,7 +213,7 @@ open class FbInterClass {
                     showInterstitialAd(activity, {
                         Log.e(TAG, "isAdShown $it")
                         activity.runOnUiThread { listener.invoke() }
-                    })
+                    }, listenerImp)
             }
         }
     }
